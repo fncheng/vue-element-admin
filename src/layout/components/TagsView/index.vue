@@ -185,6 +185,9 @@ export default {
         }
       }
     },
+    /**
+     * tags标签右键触发contextmenu事件，处理函数
+     */
     openMenu(tag, e) {
       const menuMinWidth = 105
       const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
