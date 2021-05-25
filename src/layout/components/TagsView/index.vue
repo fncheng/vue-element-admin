@@ -1,6 +1,11 @@
 <template>
   <div id="tags-view-container" class="tags-view-container">
     <scroll-pane ref="scrollPane" class="tags-view-wrapper" @scroll="handleScroll">
+      <!-- eslint-disable-next-line -->
+      <!-- 
+        tag: $route对象
+        click.middle.native: 原生的鼠标中键点击事件
+       -->
       <router-link
         v-for="tag in visitedViews"
         ref="tag"
@@ -49,6 +54,7 @@ export default {
     }
   },
   watch: {
+    // 监听页面url的变化
     $route() {
       this.addTags()
       this.moveToCurrentTag()
@@ -66,9 +72,17 @@ export default {
     this.addTags()
   },
   methods: {
+    /**
+     * 判断是否处于激活状态,如果路由对象路径和当前页面路由路径一致,则该页面处于激活状态
+     * @param {Object} route 路由对象
+     */
     isActive(route) {
       return route.path === this.$route.path
     },
+    /**
+     * 判断标签是否固定在TagsView组件上
+     * @param {Object} tag 路由对象
+     */
     isAffix(tag) {
       return tag.meta && tag.meta.affix
     },
@@ -110,8 +124,9 @@ export default {
       return false
     },
     moveToCurrentTag() {
-      const tags = this.$refs.tag
+      const tags = this.$refs.tag // tags为router-link组件 的集合
       this.$nextTick(() => {
+        console.log('tags: ', tags)
         for (const tag of tags) {
           if (tag.to.path === this.$route.path) {
             this.$refs.scrollPane.moveToTarget(tag)
